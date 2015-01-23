@@ -1,0 +1,45 @@
+--- a/libbpg.h
++++ b/libbpg.h
+@@ -1,3 +1,24 @@
++#ifdef C2NIM
++#  dynlib bpglib
++#  cdecl
++
++#  if defined(windows)
++#    define bpglib "libbpg.dll"
++#  elif defined(macosx)
++#    define bpglib "libbpg.dylib"
++#  else
++#    define bpglib "libbpg.so"
++#  endif
++
++#  prefix bpg_decoder_
++#  prefix BPG_
++#  prefix BPG
++
++#  mangle uint8_t uint8
++#  mangle uint16_t uint16
++#  mangle uint32_t uint32
++#endif
++
+ /*
+  * BPG decoder
+  * 
+@@ -21,10 +42,8 @@
+  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  * THE SOFTWARE.
+  */
+-#ifndef _LIBBPG_H
+-#define _LIBBPG_H
+ 
+-typedef struct BPGDecoderContext BPGDecoderContext;
++typedef struct BPGDecoderContext {};
+ 
+ typedef enum {
+     BPG_FORMAT_GRAY,
+@@ -132,5 +151,3 @@ int bpg_decoder_get_info_from_buf(BPGImageInfo *p,
+                                   const uint8_t *buf, int buf_len);
+ /* Free the extension data returned by bpg_decoder_get_info_from_buf() */
+ void bpg_decoder_free_extension_data(BPGExtensionData *first_md);
+-
+-#endif /* _LIBBPG_H */
