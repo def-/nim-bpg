@@ -1,6 +1,6 @@
 import bpg, os
 
-proc writePPM(img, filename) =
+proc writePPM(img: ptr DecoderContext, filename: string) =
   var imgInfo: ImageInfo
   discard img.getInfo(addr imgInfo)
 
